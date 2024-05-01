@@ -5,19 +5,23 @@ const path = require('path');
 const process = require('process');
 const basename = path.basename(__filename);
 const Sequelize = require('sequelize');
+const file = require('../config/config');
 
 const db = {};
 
-const sequelize = new Sequelize({
-  dialect: PostgresDialect,
-  database: 'postgres',
-  user: 'postgres',
-  password: process.env.PASSWORD,
-  host: '192.168.1.140',
-  port: 5432,
-  ssl: false,
-  clientMinMessages: 'notice',
-});
+const dbConfig = file[process.env.NODE_ENV || 'development'];
+
+const sequelize = new Sequelize(
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
+  {
+    host: dbConfig.host,
+    port: dbConfig.port,
+    dialect: dbConfig.dialect,
+    ssl: dbConfig.ssl,
+  }
+);
 
 fs
   .readdirSync(__dirname)

@@ -1,12 +1,18 @@
 require("dotenv").config();
 const { sequelize } = require("./models/index.js");
+
 const express = require("express");
+const bodyParser = require('body-parser');
 const morgan = require("morgan");
 const app = express();
+
 app.use(morgan("dev"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
-app.use("/api/contact", require("./routes/contact"));
+app.use("/filme", require("./routes/filmes"));
+app.use("/genero", require("./routes/generos"));
 
 
 
@@ -52,12 +58,12 @@ app.all("*", (req, res, next) => {
   
 
 
-app.listen(8080, async () => {
-    console.log(`API Server listening on port ${'8080'}`);
+app.listen(process.env.PORT || 4000, async () => {
+    console.log(`API Server listening on port ${process.env.PORT || 3000} in ${process.env.NODE_ENV || 'development'} mode`);
     try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+        console.log('Connection has been established successfully.');
     } catch (error) {
-    console.error('Unable to connect to the database:', error);
+        console.error('Unable to connect to the database:', error);
     }
 });
