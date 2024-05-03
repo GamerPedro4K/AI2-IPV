@@ -1,44 +1,28 @@
 import {React, useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import NavbarC from '../components/Navbar';
 import Slider from '../components/Slider';
-import config from '../data/config';
-
+import { getFilmes } from '../services/filmesService';
 
 import Container from'react-bootstrap/Container';
 import CardC from '../components/Card';
-import Button from 'react-bootstrap/esm/Button';
 
 const Home = (props) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [msgLoad, setMsgLoad] = useState('Carregando dados...');
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch(config.apiUrl + '/filme/list');
-            const json = await response.json();
-            console.log('Fetched data:', json);
-            if(json.status === 200){
-                setData(json.success.msg);
-                setLoading(false);
-            }
-            
-        } catch (error) {
-            setMsgLoad('Erro ao carregar Filmes');
-            console.error('Error fetching data:', error);
-        }
-    };
-    
-
     useEffect(() => {
-        fetchData();
+        getFilmes().then((data) => {
+            setData(data);
+            setLoading(false);
+        }).catch((err) => {
+            setMsgLoad(err.message);
+        });
     }, []); 
 
 
     return (
         <>
-       <NavbarC/>
 
         {loading ? (
             <div className='centered'>
@@ -62,17 +46,11 @@ const Home = (props) => {
                     </div>
                 </div>
                 <div className='row'>
-                    {data.map((item, index) => { 
-                        if(index <= 500)
-                            return <>
-                                <div className='col-3 mt-4' style={{height: '510px'}}>
-                                    <CardC  data={item} key={index}/>
-                                </div>
-                            </>
-                        else
-                            return <></>
-                        }
-                    )}
+                {data.map((item) => (
+                    <div key={item.id} className='col-3 mt-4' style={{ height: '510px' }}>
+                        <CardC data={item} />
+                    </div>
+                ))}
                 </div>
             </Container>
         </div>
