@@ -24,7 +24,7 @@ const Home = (props) => {
             }
             
         } catch (error) {
-            setMsgLoad('Erro ao carregar dados');
+            setMsgLoad('Erro ao carregar Filmes');
             console.error('Error fetching data:', error);
         }
     };
@@ -52,12 +52,21 @@ const Home = (props) => {
         <div>
             {<Slider items={[data[0] || null, data[1] || null, data[2] || null, data[3] || null, data[4] || null]}/>}
             <Container className='mt-5'>
-                <div className='d-flex justify-content-center flex-wrap align-items-stretch gap-4'>
-                    {data.map((item, index) =>  
-                    { if(index <= 500)
-                        return <CardC data={item} key={index}/>
-                    else
-                return <></>}
+                <div className='row'>
+                <div className='col-6'>gg</div>
+                <div className='col-6'>fgg</div>
+                </div>
+                <div className='row'>
+                    {data.map((item, index) => { 
+                        if(index <= 500)
+                            return <>
+                                <div className='col-3 mt-4' style={{height: '480px'}}>
+                                    <CardC  data={item} key={index}/>
+                                </div>
+                            </>
+                        else
+                            return <></>
+                        }
                     )}
                 </div>
             </Container>
