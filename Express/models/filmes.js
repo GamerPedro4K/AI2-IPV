@@ -5,6 +5,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Generos, {foreignKey: 'idGenero'});
     }
+    toJSON() {
+      const values = Object.assign({}, this.get());
+
+      if(values.id <= 5){
+        values.foto="https://source.unsplash.com/random/2000x1000?sig="+values.id;
+      }
+      else{
+        values.foto="https://source.unsplash.com/random?sig="+values.id;
+      }
+  
+      return values;
+    }
   }
   filmes.init({
     id: {

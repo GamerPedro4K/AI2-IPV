@@ -4,11 +4,17 @@ const { sequelize } = require("./models/index.js");
 const express = require("express");
 const bodyParser = require('body-parser');
 const morgan = require("morgan");
+const cors = require('cors');
 const app = express();
+app.use(cors());
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+/* app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+ */
 
 
 app.use("/filme", require("./routes/filmes"));
@@ -24,7 +30,7 @@ app.use((err, req, res, next) => {
     const isProduction = process.env.PRODUCTION === "true" || false;
 
     const responseData = {
-        errors: [{ msg: err.nome_erro }],
+        errors: { msg: err.nome_erro },
         status: err.status || 500
     };
 
@@ -40,7 +46,7 @@ app.all("*", (req, res, next) => {
     const err = new Error(`URL solicitado ${req.path} não foi encontrado!`);
 
     const responseData = {
-        errors: [{ msg: err.message }],
+        errors: { msg: err.message },
         status: 404
     };
 

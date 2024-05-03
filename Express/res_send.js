@@ -2,18 +2,18 @@ const dotenv = require('dotenv');
 
 exports.success = async (res, text) => {
     res.json({
-        success: [{
+        success: {
             msg: text
-        }],
+        },
         status: 200
     });
 };
 
 exports.info = async (res, text) => {
     res.json({
-        info: [{
+        info: {
             msg: text
-        }],
+        },
         status: 200
     });
 };
@@ -26,20 +26,20 @@ exports.error = async (res, error) => {
     ----------------------------------------------ERROR END----------------------------------------------\n\n\n`);
     if(process.env.PRODUCTION=="true" || false){
         res.json({
-            errors: [{
+            errors: {
                 msg: error.nome
-            }],
+            },
             status: error.status || 500
         });
     }else{
         res.json({
-            errors: [
+            errors: 
                 {
                     msg: error.nome,
                     msg_error: error.message || null,
                     stack: error.stack
                 }
-            ],
+            ,
             status: error.status || 500
         });
     }
