@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import TruncateText from '../pipes/TruncateText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { Link } from 'react-router-dom';
 
 const CardC = (props) => {
     const card = props.data;
@@ -19,9 +19,11 @@ const CardC = (props) => {
               <h5>{card.GeneroDescricao}</h5>
             </div>
             <div className='col-6 d-flex justify-content-end' style={{paddingRight: '18px'}} >
-              <button className='btn btn-secondary d-auto' style={{borderRadius: '25px', height:'40px', width: '40px'}}>
-                <FontAwesomeIcon icon="fa-solid fa-pen" color='white' />
-              </button>
+              <Link to={'/edit'} style={{ textDecoration: 'none' }}>
+                <button className='btn btn-secondary d-auto' style={{borderRadius: '25px', height:'40px', width: '40px'}}>
+                  <FontAwesomeIcon icon="fa-solid fa-pen" color='white' />
+                </button>
+              </Link>
             </div>
           </div>
         </Card.Body>

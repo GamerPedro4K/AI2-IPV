@@ -2,7 +2,7 @@ const router = require("express").Router();
 const generosController = require("../controllers/generosController.js");
 
 router.get('/list',
-generosController.filme_list
+generosController.filme_list,
 );
 
 router.get('/get/:id',

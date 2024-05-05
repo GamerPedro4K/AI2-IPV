@@ -29,16 +29,21 @@ const AddLivro = (props) => {
       fetchData();
   }, []); 
 
-  // Definindo o schema de validação com Yup
   const validationSchema = Yup.object().shape({
     titulo: Yup.string()
-      .required('O título é obrigatório'),
+      .required('O título é obrigatório')
+      .max(250, 'A título deve ter no máximo 250 caracteres'),
     linkImg: Yup.string()
-      .required('O link da imagem é obrigatório'),
+    .required('O link da imagem é obrigatório')
+    .url('O link da imagem deve ser um URL válido')
+    .matches(/.(png|jpg|gif)$/, 'O link da imagem deve terminar com .png, .jpg ou .gif')
+    .max(250, 'O link deve ter no máximo 250 caracteres'),
     genero: Yup.string()
       .required('Selecione o gênero'),
     desc: Yup.string()
-      .required('A descrição é obrigatória')
+    .required('A descrição é obrigatória')
+    .min(10, 'A descrição deve ter no mínimo 10 caracteres')
+    .max(250, 'A descrição deve ter no máximo 250 caracteres'),
   });
 
   const formik = useFormik({

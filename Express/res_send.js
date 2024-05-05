@@ -9,15 +9,6 @@ exports.success = async (res, text) => {
     });
 };
 
-exports.info = async (res, text) => {
-    res.json({
-        info: {
-            msg: text
-        },
-        status: 200
-    });
-};
-
 exports.error = async (res, error) => {
     console.error(`\n\n------------------------------------------------ERROR------------------------------------------------\n 
     ${JSON.stringify(error.nome)} \ \n\n

@@ -1,15 +1,14 @@
 // filmesService.js
 import config from '../data/config';
-
+import axios from 'axios';
 
 export const getFilmes = async () => {
     try {
-        const response = await fetch(config.apiUrl + '/filme/list');
-        const data = await response.json();
-        if(data.status === 200){
+        const response = await axios.get(config.apiUrl + '/filme/list');
+        const data = response.data;
+        if (data.status === 200) {
             return data.success.msg;
-        }
-        else{
+        } else {
             throw new Error(data.errors.msg_error);
         }
     } catch (error) {
@@ -17,3 +16,4 @@ export const getFilmes = async () => {
         throw error;
     }
 };
+

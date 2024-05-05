@@ -60,14 +60,11 @@ app.all("*", (req, res, next) => {
 
 
   
-  
-  
-
 
 app.listen(process.env.PORT || 4000, async () => {
-    console.log(`API Server listening on port ${process.env.PORT || 3000} in ${process.env.NODE_ENV || 'development'} mode`);
+    console.log(`API Server listening on port ${process.env.PORT || 4000} in ${process.env.NODE_ENV || 'development'} mode`);
     try {
-    await sequelize.authenticate();
+        await sequelize.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
