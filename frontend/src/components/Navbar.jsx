@@ -10,12 +10,10 @@ const NavbarC = (props) => {
         <>
         <Navbar expand="lg" bg="dark" data-bs-theme="dark" fixed="top" className="bg-body-tertiary">
         <Container>
-            <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand as={Link} to={'/'} style={{ textDecoration: 'none' }}>
                 <img style={{marginTop: '-3px'}} alt="" src="https://static-00.iconduck.com/assets.00/film-camera-icon-2048x2048-9l3wqnjk.png" width="30" height="30" className="d-inline-block align-top"/>
                 {' '}<b>Movie</b>Rise
             </Navbar.Brand>
-            </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

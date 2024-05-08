@@ -16,7 +16,7 @@ const CardC = (props) => {
           </div>
         </div>
        
-        <img src={card.foto} style={{ marginTop: '-46px', height: 180, width: 'auto' }} class="card-img-top" alt="..."></img>
+        <img src={card.foto} style={{ marginTop: '-46px', height: 180, width: 'auto' }} className="card-img-top" alt="..."></img>
         <Card.Body>
           <Card.Title>{card.titulo}</Card.Title>
           <Card.Text>

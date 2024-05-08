@@ -2,6 +2,8 @@ import {React, useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {getGeneros} from '../services/generoService';
+import { Link } from 'react-router-dom';
+
 
 const AddLivro = (props) => {
 
@@ -108,6 +110,7 @@ const AddLivro = (props) => {
 
 
           <div className=' d-flex justify-content-end mt-3'>
+            <Link to="/" className="btn btn-secondary me-3">Voltar</Link>
             <button type="submit" className="btn btn-primary">Adicionar</button>
           </div>
           
