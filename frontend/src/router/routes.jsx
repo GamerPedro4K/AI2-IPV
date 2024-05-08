@@ -4,7 +4,7 @@ import {createBrowserRouter, RouterProvider, redirect} from 'react-router-dom';
 
 import NavbarC from '../components/Navbar';
 import Home from '../views/Home';
-import AddLivro from '../views/AddLivro';
+import AddFilme from '../views/AddFilme';
 import PageNotFound from '../views/PageNotFound';
 
 let router = createBrowserRouter([
@@ -18,7 +18,7 @@ let router = createBrowserRouter([
             },
             {
                 path: 'add',
-                Component: AddLivro,
+                Component: AddFilme,
             },
             {
                 path: '*',

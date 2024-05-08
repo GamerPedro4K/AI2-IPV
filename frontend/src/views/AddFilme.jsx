@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {getGeneros} from '../services/generoService';
 import { Link } from 'react-router-dom';
+import { addFilme as AddFilmeAPI } from '../services/filmesService';
 
-
-const AddLivro = (props) => {
+const AddFilme = (props) => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,13 +51,13 @@ const AddLivro = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      console.log(values);
+      
     },
   });
 
   return (
     <div className='container'>
-      <h1>Adicionar Livro:</h1>
+      <h1>Adicionar Filme:</h1>
       {loading ? (
         <div className='centered'>
           <div className='d-flex justify-content-center flex-column align-items-center'>
@@ -120,4 +120,4 @@ const AddLivro = (props) => {
   );
 }
 
-export default AddLivro;
+export default AddFilme;
