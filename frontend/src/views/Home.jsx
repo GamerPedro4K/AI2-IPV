@@ -42,7 +42,7 @@ const Home = (props) => {
                     <h1 className='col-6' >Veja todos os filmes:</h1>
                     <div className='col-6 d-flex justify-content-end'>
                         <Link to={'/add'} style={{ textDecoration: 'none' }}>
-                            <button className='btn btn-primary d-auto' style={{borderRadius: '25px', height:'50px', width: '50px'}}>
+                            <button className='btn btn-primary d-auto rounded-circle' style={{ height:'50px', width: '50px'}}>
                                 <FontAwesomeIcon icon="fa-solid fa-plus" size="xl" />
                             </button>
                         </Link>
@@ -50,7 +50,7 @@ const Home = (props) => {
                 </div>
                 <div className='row'>
                 {data.map((item) => (
-                    <div key={item.id} className='col-3 mt-4' style={{ height: '510px' }}>
+                    <div key={item.id} className='col-12 col-md-6 col-lg-4 col-xl-3 mt-4' style={{ height: '510px' }}>
                         <CardC data={item} />
                     </div>
                 ))}

@@ -8,7 +8,15 @@ const CardC = (props) => {
     const card = props.data;
     return (
       <Card className='w-100 h-100'>
-        <Card.Img variant="top" src={card.foto} style={{ height: 180, width: 'auto' }} />
+        <div className='d-flex justify-content-end'>
+          <div className='rounded-circle m-2' style={{backgroundColor: '#bd0000', zIndex: 10}}>
+            <div style={{width: '30px', height: '30px'}} className='d-flex justify-content-center align-items-center'>
+              <FontAwesomeIcon icon="fa-solid fa-xmark" size='xl' color='white'/>
+            </div>
+          </div>
+        </div>
+       
+        <img src={card.foto} style={{ marginTop: '-46px', height: 180, width: 'auto' }} class="card-img-top" alt="..."></img>
         <Card.Body>
           <Card.Title>{card.titulo}</Card.Title>
           <Card.Text>

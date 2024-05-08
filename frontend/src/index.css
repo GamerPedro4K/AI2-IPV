@@ -17,14 +17,12 @@ code {
   margin-top: -56px;
 }
 .centered {
-  /* This ensures the div covers the entire viewport */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 
-  /* Center the content horizontally and vertically */
   display: flex;
   justify-content: center;
   align-items: center;

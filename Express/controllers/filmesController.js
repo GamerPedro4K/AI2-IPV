@@ -32,3 +32,7 @@ exports.filme_create = async (req, res, next) => {
 exports.filme_update = async (req, res, next) => {
     res_send.success(res, await Filmes.update(req.body, {where: {id: req.params.id}}));
 };
+
+exports.filme_delete = async (req, res, next) => {
+    res_send.success(res, await Filmes.destroy({where: {id: req.params.id}}));
+};

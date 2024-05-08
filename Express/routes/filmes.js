@@ -17,4 +17,8 @@ router.put('/update/:id',
     filmesController.filme_update
 );
 
+router.delete('/delete/:id',
+    filmesController.filme_delete
+);
+
 module.exports = router;

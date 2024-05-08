@@ -17,4 +17,8 @@ router.put('/update/:id',
     generosController.filme_update
 );
 
+router.delete('/delete/:id',
+    generosController.filme_delete
+);
+
 module.exports = router;

@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from 'react';
-import { useFormik } from 'formik'; // Importando o useFormik
-import * as Yup from 'yup'; // Importando o Yup para fazer a validação dos campos
-import config from '../data/config';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import {getGeneros} from '../services/generoService';
 
 const AddLivro = (props) => {
 
@@ -10,19 +10,13 @@ const AddLivro = (props) => {
   const [msgLoad, setMsgLoad] = useState('Carregando dados...');
 
   const fetchData = async () => {
-      try {
-          const response = await fetch(config.apiUrl + '/genero/list');
-          const json = await response.json();
-          console.log('Fetched data:', json);
-          if(json.status === 200){
-              setData(json.success.msg);
-              setLoading(false);
-          }
-          
-      } catch (error) {
-          setMsgLoad('Erro ao carregar Generos');
-          console.error('Error fetching data:', error);
-      }
+      getGeneros().then((data) => {
+          setData(data);
+          setLoading(false);
+      })
+      .catch((err) => {
+          setMsgLoad(err.message);
+      });
   };
 
   useEffect(() => {

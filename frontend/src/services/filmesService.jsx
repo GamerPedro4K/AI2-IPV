@@ -1,19 +1,21 @@
-// filmesService.js
-import config from '../data/config';
-import axios from 'axios';
+import {api, fetchData} from './axiosConfig';
 
 export const getFilmes = async () => {
-    try {
-        const response = await axios.get(config.apiUrl + '/filme/list');
-        const data = response.data;
-        if (data.status === 200) {
-            return data.success.msg;
-        } else {
-            throw new Error(data.errors.msg_error);
-        }
-    } catch (error) {
-        console.log('Error fetching data:', error);
-        throw error;
-    }
+    return fetchData(api.get, '/filme/list');
 };
 
+export const getFilmeById = async (id) => {
+    return fetchData(api.get, `/filme/get/${id}`);
+};
+
+export const addFilme = async (filme) => {
+    return fetchData(api.post, '/filme/add', filme);
+};
+
+export const updateFilme = async (filme) => {
+    return fetchData(api.put, '/filme/update', filme);
+};
+
+export const deleteFilme = async (id) => {
+    return fetchData(api.delete, `/filme/delete/${id}`);
+};
