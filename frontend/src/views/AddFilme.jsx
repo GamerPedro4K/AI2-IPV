@@ -29,14 +29,14 @@ const AddFilme = (props) => {
     titulo: Yup.string()
       .required('O título é obrigatório')
       .max(250, 'A título deve ter no máximo 250 caracteres'),
-    linkImg: Yup.string()
+    foto: Yup.string()
     .required('O link da imagem é obrigatório')
     .url('O link da imagem deve ser um URL válido')
     .matches(/.(png|jpg|gif)$/, 'O link da imagem deve terminar com .png, .jpg ou .gif')
     .max(250, 'O link deve ter no máximo 250 caracteres'),
-    genero: Yup.string()
+    idGenero: Yup.string()
       .required('Selecione o gênero'),
-    desc: Yup.string()
+    descricao: Yup.string()
     .required('A descrição é obrigatória')
     .min(10, 'A descrição deve ter no mínimo 10 caracteres')
     .max(250, 'A descrição deve ter no máximo 250 caracteres'),
@@ -45,13 +45,19 @@ const AddFilme = (props) => {
   const formik = useFormik({
     initialValues: {
       titulo: '',
-      linkImg: '',
-      genero: '',
-      desc: ''
+      foto: '',
+      idGenero: '',
+      descricao: ''
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      
+      AddFilmeAPI(values).then((data) => {
+        alert(data);
+        props.history.push('/');
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
     },
   });
 
@@ -78,33 +84,33 @@ const AddFilme = (props) => {
 
 
           <div className="form-group mt-3">
-            <label htmlFor="linkImg">Link Imagem:</label>
-            <input type="text" className="form-control" id="linkImg" placeholder="link" {...formik.getFieldProps('linkImg')} />
-            {formik.touched.linkImg && formik.errors.linkImg ? (
-              <div className="text-danger">{formik.errors.linkImg}</div>
+            <label htmlFor="foto">Link Imagem:</label>
+            <input type="text" className="form-control" id="foto" placeholder="link" {...formik.getFieldProps('foto')} />
+            {formik.touched.foto && formik.errors.foto ? (
+              <div className="text-danger">{formik.errors.foto}</div>
             ) : null}
           </div>
 
 
           <div className="form-group mt-3">
-            <label htmlFor="genero">Selecione o Gênero:</label>
-            <select className="form-control" id="genero" {...formik.getFieldProps('genero')}>
+            <label htmlFor="idGenero">Selecione o Gênero:</label>
+            <select className="form-control" id="idGenero" {...formik.getFieldProps('idGenero')}>
               <option value="">Selecione</option>
               {data.map((item, index) => ( 
                 <option value={item.id} key={index}>{item.descricao}</option>
               ))}
             </select>
-            {formik.touched.genero && formik.errors.genero ? (
-              <div className="text-danger">{formik.errors.genero}</div>
+            {formik.touched.idGenero && formik.errors.idGenero ? (
+              <div className="text-danger">{formik.errors.idGenero}</div>
             ) : null}
           </div>
 
 
           <div className="form-group mt-3">
-            <label htmlFor="desc">Descrição:</label>
-            <textarea className="form-control" id="desc" rows="5" {...formik.getFieldProps('desc')} />
-            {formik.touched.desc && formik.errors.desc ? (
-              <div className="text-danger">{formik.errors.desc}</div>
+            <label htmlFor="descricao">Descrição:</label>
+            <textarea className="form-control" id="descricao" rows="5" {...formik.getFieldProps('descricao')} />
+            {formik.touched.descricao && formik.errors.descricao ? (
+              <div className="text-danger">{formik.errors.descricao}</div>
             ) : null}
           </div>
 

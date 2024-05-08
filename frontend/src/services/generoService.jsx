@@ -9,11 +9,11 @@ export const getGeneroById = async (id) => {
 }
 
 export const addGenero = async (genero) => {
-    return fetchData(api.post, '/genero/add', genero);
+    return fetchData(api.post, '/genero/create', genero);
 }
 
-export const updateGenero = async (genero) => {
-    return fetchData(api.put, '/genero/update', genero);
+export const updateGenero = async (id,genero) => {
+    return fetchData(api.put, `/genero/update/${id}`, genero);
 }
 
 export const deleteGenero = async (id) => {

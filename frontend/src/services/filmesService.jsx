@@ -9,7 +9,7 @@ export const getFilmeById = async (id) => {
 };
 
 export const addFilme = async (filme) => {
-    return fetchData(api.post, '/filme/add', filme);
+    return fetchData(api.post, '/filme/create', filme);
 };
 
 export const updateFilme = async (filme) => {
