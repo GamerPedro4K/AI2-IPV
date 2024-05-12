@@ -18,11 +18,11 @@ const Generos = (props) =>  {
         descricao: '',
     };
 
-    const [products, setGeneros] = useState(null);
+    const [generos, setGeneros] = useState(null);
     const [adicionarDialog, setAdicionarDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [genero, setGenero] = useState(generoVazio);
+    const [ApagarGeneroDialog, setApagarGeneroDialog] = useState(false);
+    const [ApagarGeneroSelecionadosDialog, setApagarGeneroSelecionadosDialog] = useState(false);
+    const [generoSelecionado, setGeneroSelecionado] = useState(generoVazio);
     const [generoSelecionados, setGeneroSelecionados] = useState(null);
     const [enviado, setEnviado] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
@@ -36,12 +36,12 @@ const Generos = (props) =>  {
     //Adicionar / Editar
 
     const ModalAdicionar = () => {
-        setGenero(generoVazio);
+        setGeneroSelecionado(generoVazio);
         setAdicionarDialog(true);
     };
 
     const editarGenero = (gen) => {
-        setGenero({ ...gen });
+        setGeneroSelecionado({ ...gen });
         setAdicionarDialog(true);
     };
 
@@ -53,9 +53,9 @@ const Generos = (props) =>  {
 
     const guardarGenero = () => {
         setEnviado(true);
-        if(genero.descricao.length >= 4 ){
-            if(genero.id == null){
-                addGenero(genero).then(() => {
+        if(generoSelecionado.descricao.length >= 4 ){
+            if(generoSelecionado.id == null){
+                addGenero(generoSelecionado).then(() => {
                     setAdicionarDialog(false);
                     toast.current.show({ severity:'success', summary: 'Sucesso', detail: 'Genero Adicionado!', life: 3000 });
                     getGeneros().then((data) => setGeneros(data));
@@ -64,7 +64,7 @@ const Generos = (props) =>  {
                 });
             }
             else{
-                updateGenero(genero).then(() => {
+                updateGenero(generoSelecionado).then(() => {
                     setAdicionarDialog(false);
                     toast.current.show({ severity:'success', summary: 'Sucesso', detail: 'Genero Alterado!', life: 3000 });
                     getGeneros().then((data) => setGeneros(data));
@@ -72,84 +72,72 @@ const Generos = (props) =>  {
                     toast.current.show({ severity: 'error', summary: 'Erro', detail: 'Não foi possivel adicionar o genero!', life: 3000 });
                 });
             }
-            setGenero(generoVazio);
+            setGeneroSelecionado(generoVazio);
         }
     };
 
     //Apagar Linha
 
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
+    const fecharModalApagar = () => {
+        setApagarGeneroDialog(false);
     };
 
-    const confirmDeleteProduct = (product) => {
-        setGenero(product);
-        setDeleteProductDialog(true);
+    const AceitarApagar = (product) => {
+        setGeneroSelecionado(product);
+        setApagarGeneroDialog(true);
     };
 
-    const deleteProduct = async () => {
+    const ApagarGenero = async () => {
 
-        for (const element of products) {
-            if(element.id === genero.id)
+        for (const element of generos) {
+            if(element.id === generoSelecionado.id)
                 await deleteGenero(element.id);
         }
 
         getGeneros().then((data) => setGeneros(data));
         
-        setDeleteProductDialog(false);
-        setGenero(generoVazio);
+        setApagarGeneroDialog(false);
+        setGeneroSelecionado(generoVazio);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
 
     //Apagar Selecionados
 
-    const hideDeleteProductsDialog = () => {
-        setDeleteProductsDialog(false);
+    const fecharModalApagarSelecionados = () => {
+        setApagarGeneroSelecionadosDialog(false);
     };
     
-    const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
+    const AceitarApagarSelecionados = () => {
+        setApagarGeneroSelecionadosDialog(true);
     };
 
-    const deleteSelectedProducts = async () => {
+    const ApagarGenerosSelecionados = async () => {
         for (const element of generoSelecionados) {
             await deleteGenero(element.id);
         }
     
         getGeneros().then((data) => setGeneros(data));
     
-        setDeleteProductsDialog(false);
+        setApagarGeneroSelecionadosDialog(false);
         setGeneroSelecionados(null);
         toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Generos Apagados', life: 3000 });
     };
     
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
-        let _genero = { ...genero };
+        let _genero = { ...generoSelecionado };
         _genero[`${name}`] = val;
-        setGenero(_genero);
+        setGeneroSelecionado(_genero);
     };
 
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
                 <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editarGenero(rowData)} />
-                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
+                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => AceitarApagar(rowData)} />
             </React.Fragment>
         );
     };
-    const deleteProductDialogFooter = (
-        <React.Fragment>
-            <Button label="Não" icon="pi pi-times" outlined onClick={hideDeleteProductDialog} />
-            <Button label="Sim," icon="pi pi-check" severity="danger" onClick={deleteProduct} />
-        </React.Fragment>
-    );
-    const deleteProductsDialogFooter = (
-        <React.Fragment>
-            <Button label="Não" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
-            <Button label="Sim" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
-        </React.Fragment>
-    );
 
     return (
         <div className='container' style={{marginTop: '75px'}}>
@@ -159,11 +147,11 @@ const Generos = (props) =>  {
                 <Toolbar className="mb-4" left={
                     <div className="flex flex-wrap gap-2">
                         <Button label="Adicionar" icon="pi pi-plus" severity="success" onClick={ModalAdicionar} />
-                        <Button label="Apagar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!generoSelecionados || !generoSelecionados.length} />
+                        <Button label="Apagar" icon="pi pi-trash" severity="danger" onClick={AceitarApagarSelecionados} disabled={!generoSelecionados || !generoSelecionados.length} />
                     </div>
                 }></Toolbar>
 
-                <DataTable ref={dt} value={products} selection={generoSelecionados} onSelectionChange={(e) => setGeneroSelecionados(e.value)}
+                <DataTable ref={dt} value={generos} selection={generoSelecionados} onSelectionChange={(e) => setGeneroSelecionados(e.value)}
                         dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25, 50, 100]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={
@@ -192,26 +180,36 @@ const Generos = (props) =>  {
                     <label htmlFor="genero" className="font-bold">
                         Genero:
                     </label>
-                    <InputText id="genero" value={genero.descricao} onChange={(e) => onInputChange(e, 'descricao')} required autoFocus className={classNames({ 'p-invalid': enviado && genero.descricao.length <= 4 })} />
-                    {enviado && genero.descricao.length <= 4 && <small className="p-error">Genero Obrigatorio.</small>}
+                    <InputText id="genero" value={generoSelecionado.descricao} onChange={(e) => onInputChange(e, 'descricao')} required autoFocus className={classNames({ 'p-invalid': enviado && generoSelecionado.descricao.length <= 4 })} />
+                    {enviado && generoSelecionado.descricao.length <= 4 && <small className="p-error">Genero Obrigatorio.</small>}
                 </div>
             </Dialog>
 
-            <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+            <Dialog visible={ApagarGeneroDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={
+                <React.Fragment>
+                    <Button label="Não" icon="pi pi-times" outlined onClick={fecharModalApagar} />
+                    <Button label="Sim" icon="pi pi-check" severity="danger" onClick={ApagarGenero} />
+                </React.Fragment>
+            } onHide={fecharModalApagar}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {genero && (
+                    {generoSelecionado && (
                         <span>
-                            Are you sure you want to delete <b>{genero.name}</b>?
+                            Tem certeza de que deseja apagar <b>{generoSelecionado.descricao}</b>?
                         </span>
                     )}
                 </div>
             </Dialog>
 
-            <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
+            <Dialog visible={ApagarGeneroSelecionadosDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={
+                <React.Fragment>
+                    <Button label="Não" icon="pi pi-times" outlined onClick={fecharModalApagarSelecionados} />
+                    <Button label="Sim" icon="pi pi-check" severity="danger" onClick={ApagarGenerosSelecionados} />
+                </React.Fragment>
+            } onHide={fecharModalApagarSelecionados}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {genero && <span>Are you sure you want to delete the selected products?</span>}
+                    {generoSelecionado && <span>Tem acerteza de que deseja apagar os produtos selecionados?</span>}
                 </div>
             </Dialog>
         </div>
