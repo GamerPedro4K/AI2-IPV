@@ -28,3 +28,7 @@ code {
   align-items: center;
 }
 
+
+ol, ul {
+    padding-left: 0rem;
+}

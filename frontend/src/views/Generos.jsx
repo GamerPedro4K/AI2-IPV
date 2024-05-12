@@ -140,7 +140,7 @@ const Generos = (props) =>  {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button style={{lineHeight: 'normal', borderRadius: '50%'}} icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editarGenero(rowData)} />
+                <Button style={{lineHeight: 'normal', borderRadius: '50%', marginRight: '8px'}} icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editarGenero(rowData)} />
                 <Button style={{lineHeight: 'normal', borderRadius: '50%'}} icon="pi pi-trash" rounded outlined severity="danger" onClick={() => AceitarApagar(rowData)} />
             </React.Fragment>
         );
@@ -153,7 +153,7 @@ const Generos = (props) =>  {
             <div className="card">
                 <Toolbar className="mb-4" left={
                     <div className="flex flex-wrap gap-2">
-                        <Button style={{lineHeight: 'normal', borderRadius: '6px'}} label="Adicionar" icon="pi pi-plus" severity="success" onClick={ModalAdicionar} />
+                        <Button style={{lineHeight: 'normal', borderRadius: '6px', marginRight: '6px'}} label="Adicionar" icon="pi pi-plus" severity="success" onClick={ModalAdicionar} />
                         <Button  style={{lineHeight: 'normal', borderRadius: '6px'}} label="Apagar" icon="pi pi-trash" severity="danger" onClick={AceitarApagarSelecionados} disabled={!generoSelecionados || !generoSelecionados.length} />
                     </div>
                 }></Toolbar>
@@ -161,12 +161,12 @@ const Generos = (props) =>  {
                 <DataTable ref={dt} value={generos} selection={generoSelecionados} onSelectionChange={(e) => setGeneroSelecionados(e.value)}
                         dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25, 50, 100]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={
+                        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} produtos" globalFilter={globalFilter} header={
                         <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                            <h4 className="m-0">Gerir Generos</h4>
+                            <h4 className="m-0" style={{}}>Gerir Generos</h4>
                             <IconField iconPosition="left">
                                 <InputIcon className="pi pi-search" />
-                                <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Pesquisar..." />
+                                <InputText style={{lineHeight: 'normal'}} type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Pesquisar..." />
                             </IconField>
                         </div>
                 }>
