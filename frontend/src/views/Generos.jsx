@@ -46,6 +46,7 @@ const Generos = (props) =>  {
     };
 
     const fecharModalAdcionar = () => {
+        setGeneroSelecionado(generoVazio);
         setEnviado(false);
         setAdicionarDialog(false);
     };
@@ -59,8 +60,9 @@ const Generos = (props) =>  {
                     setAdicionarDialog(false);
                     toast.current.show({ severity:'success', summary: 'Sucesso', detail: 'Genero Adicionado!', life: 3000 });
                     getGeneros().then((data) => setGeneros(data));
-                }).catch(() => {
-                    toast.current.show({ severity: 'error', summary: 'Erro', detail: 'Não foi possivel adicionar o genero!', life: 3000 });
+                    setGeneroSelecionado(generoVazio);
+                }).catch((err) => {
+                    toast.current.show({ severity: 'error', summary: 'Erro', detail: err.message, life: 3000 });
                 });
             }
             else{
@@ -68,17 +70,18 @@ const Generos = (props) =>  {
                     setAdicionarDialog(false);
                     toast.current.show({ severity:'success', summary: 'Sucesso', detail: 'Genero Alterado!', life: 3000 });
                     getGeneros().then((data) => setGeneros(data));
-                }).catch(() => {
-                    toast.current.show({ severity: 'error', summary: 'Erro', detail: 'Não foi possivel adicionar o genero!', life: 3000 });
+                    setGeneroSelecionado(generoVazio);
+                }).catch((err) => {
+                    toast.current.show({ severity: 'error', summary: 'Erro', detail: err.message, life: 3000 });
                 });
             }
-            setGeneroSelecionado(generoVazio);
         }
     };
 
     //Apagar Linha
 
     const fecharModalApagar = () => {
+        setGeneroSelecionado(generoVazio);
         setApagarGeneroDialog(false);
     };
 
@@ -88,17 +91,19 @@ const Generos = (props) =>  {
     };
 
     const ApagarGenero = async () => {
-
         for (const element of generos) {
             if(element.id === generoSelecionado.id)
-                await deleteGenero(element.id);
+                await deleteGenero(element.id)
+                .then(() => {
+                    setApagarGeneroDialog(false);
+                    setGeneroSelecionado(generoVazio);
+                    getGeneros().then((data) => setGeneros(data));
+                    toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Genero apagado', life: 3000 });
+                })
+                .catch((err) => {
+                    toast.current.show({ severity: 'error', summary: 'Erro: ' + element.id + ' - ' + element.descricao, detail: err.message, life: 3000 });
+                });
         }
-
-        getGeneros().then((data) => setGeneros(data));
-        
-        setApagarGeneroDialog(false);
-        setGeneroSelecionado(generoVazio);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
 
     //Apagar Selecionados
@@ -113,7 +118,9 @@ const Generos = (props) =>  {
 
     const ApagarGenerosSelecionados = async () => {
         for (const element of generoSelecionados) {
-            await deleteGenero(element.id);
+            await deleteGenero(element.id).then(() => {}).catch((err) => {
+                toast.current.show({ severity: 'error', summary: 'Erro: ' + element.id + ' - ' + element.descricao, detail: err.message, life: 3000 });
+            });;
         }
     
         getGeneros().then((data) => setGeneros(data));
@@ -133,8 +140,8 @@ const Generos = (props) =>  {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editarGenero(rowData)} />
-                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => AceitarApagar(rowData)} />
+                <Button style={{lineHeight: 'normal', borderRadius: '50%'}} icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editarGenero(rowData)} />
+                <Button style={{lineHeight: 'normal', borderRadius: '50%'}} icon="pi pi-trash" rounded outlined severity="danger" onClick={() => AceitarApagar(rowData)} />
             </React.Fragment>
         );
     };
@@ -146,8 +153,8 @@ const Generos = (props) =>  {
             <div className="card">
                 <Toolbar className="mb-4" left={
                     <div className="flex flex-wrap gap-2">
-                        <Button label="Adicionar" icon="pi pi-plus" severity="success" onClick={ModalAdicionar} />
-                        <Button label="Apagar" icon="pi pi-trash" severity="danger" onClick={AceitarApagarSelecionados} disabled={!generoSelecionados || !generoSelecionados.length} />
+                        <Button style={{lineHeight: 'normal', borderRadius: '6px'}} label="Adicionar" icon="pi pi-plus" severity="success" onClick={ModalAdicionar} />
+                        <Button  style={{lineHeight: 'normal', borderRadius: '6px'}} label="Apagar" icon="pi pi-trash" severity="danger" onClick={AceitarApagarSelecionados} disabled={!generoSelecionados || !generoSelecionados.length} />
                     </div>
                 }></Toolbar>
 
@@ -172,8 +179,8 @@ const Generos = (props) =>  {
 
             <Dialog visible={adicionarDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Gerir Genero" modal className="p-fluid" onHide={fecharModalAdcionar} footer={
                 <React.Fragment> 
-                    <Button label="Cancelar" icon="pi pi-times" outlined onClick={fecharModalAdcionar} /> 
-                    <Button label="Guardar" icon="pi pi-check" onClick={guardarGenero} />
+                    <Button style={{lineHeight: 'normal', borderRadius: '6px', marginRight: '5px'}} label="Cancelar" icon="pi pi-times" outlined onClick={fecharModalAdcionar} /> 
+                    <Button style={{lineHeight: 'normal', borderRadius: '6px'}} label="Guardar" icon="pi pi-check" onClick={guardarGenero} />
                 </React.Fragment>
             }>
                 <div className="field">
@@ -187,29 +194,37 @@ const Generos = (props) =>  {
 
             <Dialog visible={ApagarGeneroDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={
                 <React.Fragment>
-                    <Button label="Não" icon="pi pi-times" outlined onClick={fecharModalApagar} />
-                    <Button label="Sim" icon="pi pi-check" severity="danger" onClick={ApagarGenero} />
+                    <Button style={{lineHeight: 'normal', borderRadius: '6px', marginRight: '5px'}} label="Não" icon="pi pi-times" outlined onClick={fecharModalApagar} />
+                    <Button style={{lineHeight: 'normal', borderRadius: '6px'}} label="Sim" icon="pi pi-check" severity="danger" onClick={ApagarGenero} />
                 </React.Fragment>
             } onHide={fecharModalApagar}>
                 <div className="confirmation-content">
+                    <div className='d-flex justify-content-start align-content-center align-items-center'>
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {generoSelecionado && (
-                        <span>
-                            Tem certeza de que deseja apagar <b>{generoSelecionado.descricao}</b>?
+                        <span style={{marginLeft: '12px'}}>
+                            Tem certeza de que deseja apagar
+                            <br></br>
+                            <b>{generoSelecionado.descricao}</b>?
                         </span>
                     )}
+                    </div>
+                    
+                    
                 </div>
             </Dialog>
 
             <Dialog visible={ApagarGeneroSelecionadosDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={
                 <React.Fragment>
-                    <Button label="Não" icon="pi pi-times" outlined onClick={fecharModalApagarSelecionados} />
-                    <Button label="Sim" icon="pi pi-check" severity="danger" onClick={ApagarGenerosSelecionados} />
+                    <Button style={{lineHeight: 'normal', borderRadius: '6px',  marginRight: '5px'}} label="Não" icon="pi pi-times" outlined onClick={fecharModalApagarSelecionados} />
+                    <Button style={{lineHeight: 'normal', borderRadius: '6px'}} label="Sim" icon="pi pi-check" severity="danger" onClick={ApagarGenerosSelecionados} />
                 </React.Fragment>
             } onHide={fecharModalApagarSelecionados}>
                 <div className="confirmation-content">
+                    <div className='d-flex justify-content-start align-content-center align-items-center'>
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {generoSelecionado && <span>Tem acerteza de que deseja apagar os produtos selecionados?</span>}
+                    {generoSelecionado && <span style={{marginLeft: '10px'}}>Tem acerteza de que deseja apagar os produtos selecionados?</span>}
+                    </div>
                 </div>
             </Dialog>
         </div>

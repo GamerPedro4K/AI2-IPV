@@ -10,9 +10,10 @@ const handleResponse = (response) => {
   if (data.status === 200) {
       return data.success.msg;
   } else {
-      throw new Error(data.errors.msg_error);
+      throw new Error(data.errors.msg || 'Erro desconhecido');
   }
 };
+
 
 const fetchData = async (method, url, payload) => {
   try {

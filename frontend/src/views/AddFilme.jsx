@@ -1,9 +1,10 @@
-import {React, useEffect, useState} from 'react';
+import {React, useEffect, useState, useRef} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {getGeneros} from '../services/generoService';
 import { Link, useNavigate } from 'react-router-dom';
 import { addFilme as AddFilmeAPI } from '../services/filmesService';
+import { Toast } from 'primereact/toast';
 
 const AddFilme = (props) => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const AddFilme = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [msgLoad, setMsgLoad] = useState('Carregando dados...');
+  const toast = useRef(null);
 
   const fetchData = async () => {
       getGeneros().then((data) => {
@@ -53,16 +55,18 @@ const AddFilme = (props) => {
     validationSchema: validationSchema,
     onSubmit: values => {
       AddFilmeAPI(values).then((data) => {
+        toast.current.show({ severity: 'success', summary: 'Sucesso: ', detail: "Filme adicionado com sucesso", life: 3000 });
         navigate("/");
       })
       .catch((err) => {
-        alert(err.message);
+        toast.current.show({ severity: 'error', summary: 'Erro: ', detail: err.message, life: 3000 });
       });
     },
   });
 
   return (
     <div className='container'>
+      <Toast ref={toast} />
       <h1>Adicionar Filme:</h1>
       {loading ? (
         <div className='centered'>

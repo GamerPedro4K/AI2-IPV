@@ -21,6 +21,7 @@ exports.filme_list = async (req, res, next) => {
         res_send.success(res, formattedFilmes);
     }
     catch(err){
+        err.nome = "Erro ao buscar filmes";
         res_send.error(res, err);
     }
 };
@@ -44,6 +45,7 @@ exports.filme_detail = async (req, res, next) => {
         res_send.success(res, formattedFilme);
     }
     catch(err){
+        err.nome = "Erro ao buscar filme";
         res_send.error(res, err);
     }
 };
@@ -55,6 +57,7 @@ exports.filme_create = async (req, res, next) => {
         res_send.success(res, filme);
     }
     catch(err){
+        err.nome = "Erro ao criar filme";
         res_send.error(res, err);
     }
 };
@@ -66,6 +69,7 @@ exports.filme_update = async (req, res, next) => {
         res_send.success(res, filme);
     }
     catch(err){
+        err.nome = "Erro ao atualizar filme";
         res_send.error(res, err);
     }
 };
@@ -76,6 +80,7 @@ exports.filme_delete = async (req, res, next) => {
         res_send.success(res, filme);
     }
     catch(err){
+        err.nome = "Erro ao apagar filme";
         res_send.error(res, err);
     }
 };
