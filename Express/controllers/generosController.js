@@ -3,7 +3,7 @@ const { Generos } = require('../models/index.js');
 
 exports.filme_list = async (req, res, next) => {
     try{
-        res_send.success(res, await Generos.findAll());
+        res_send.success(res, await Generos.findAll({order: [['id', 'ASC']]}));
     }
     catch(err){
         res_send.error(res, err);

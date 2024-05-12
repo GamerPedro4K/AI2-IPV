@@ -1,0 +1,269 @@
+@import-normalize;
+/* Reboot */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: initial;
+  -webkit-text-size-adjust: initial;
+  -webkit-tap-highlight-color: initial;
+}
+
+hr {
+  margin: initial;
+  color: initial;
+  border: initial;
+  border-top: initial;
+  opacity: initial;
+}
+
+/* Heading styles are reset to defaults */
+
+p {
+  margin-top: initial;
+  margin-bottom: initial;
+}
+
+abbr[title] {
+  text-decoration: initial;
+  cursor: initial;
+  text-decoration-skip-ink: initial;
+}
+
+address {
+  margin-bottom: initial;
+  font-style: initial;
+  line-height: initial;
+}
+
+ol,
+ul {
+  padding-left: initial; 
+}
+
+ol,
+ul,
+dl {
+  margin-top: initial;
+  margin-bottom: initial;
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+  margin-bottom: initial;
+}
+
+dt {
+  font-weight: initial;
+}
+
+dd {
+  margin-bottom: initial;
+  margin-left: initial;
+}
+
+blockquote {
+  margin: initial;
+}
+
+b,
+strong {
+  font-weight: initial;
+}
+
+small {
+  font-size: initial;
+}
+
+mark {
+  padding: initial;
+  color: initial;
+  background-color: initial;
+}
+
+sub,
+sup {
+  position: initial;
+  font-size: initial;
+  line-height: initial;
+  vertical-align: initial;
+}
+
+sub { bottom: initial; }
+sup { top: initial; }
+
+a {
+  color: initial;
+  text-decoration: initial;
+}
+
+a:not([href]):not([class]) {
+  color: initial;
+  text-decoration: initial;
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: initial;
+  font-size: initial;
+}
+
+pre {
+  display: initial;
+  margin-top: initial;
+  margin-bottom: initial;
+  overflow: initial;
+}
+
+code {
+  color: initial;
+  word-wrap: initial;
+}
+
+kbd {
+  padding: initial;
+  color: initial;
+  background-color: initial;
+}
+
+figure {
+  margin: initial;
+}
+
+img,
+svg {
+  vertical-align: initial;
+}
+
+table {
+  caption-side: initial;
+  border-collapse: initial;
+}
+
+caption {
+  padding-top: initial;
+  padding-bottom: initial;
+  color: initial;
+  text-align: initial;
+}
+
+th {
+  font-weight: initial;
+  text-align: initial;
+}
+
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+  border-color: initial;
+  border-style: initial;
+  border-width: initial;
+}
+
+label {
+  display: initial;
+}
+
+button {
+  border-radius: initial;
+}
+
+button:focus:not(:focus-visible) {
+  outline: initial;
+}
+
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: initial;
+  font-family: initial;
+  font-size: initial;
+  line-height: initial;
+}
+
+button,
+select {
+  text-transform: initial;
+}
+
+[role="button"] {
+  cursor: initial;
+}
+
+select {
+  word-wrap: initial;
+}
+
+::-moz-focus-inner {
+  padding: initial;
+  border-style: initial;
+}
+
+textarea {
+  resize: initial;
+}
+
+fieldset {
+  min-width: initial;
+  padding: initial;
+  margin: initial;
+  border: initial;
+}
+
+legend {
+  float: initial;
+  width: initial;
+  padding: initial;
+  margin-bottom: initial;
+  font-size: initial;
+  font-weight: initial;
+  line-height: initial;
+}
+
+[type="search"] {
+  -webkit-appearance: initial;
+  outline-offset: initial;
+}
+
+::file-selector-button {
+  font: initial;
+  -webkit-appearance: initial;
+}
+
+output {
+  display: initial;
+}
+
+iframe {
+  border: initial;
+}
+
+summary {
+  display: initial;
+  cursor: initial;
+}
+
+progress {
+  vertical-align: initial;
+}
+
+[hidden] {
+  display: none !important;
+}
