@@ -13,7 +13,7 @@ export const addFilme = async (filme) => {
 };
 
 export const updateFilme = async (filme) => {
-    return fetchData(api.put, '/filme/update', filme);
+    return fetchData(api.put, `/filme/update/${filme.id}`, filme);
 };
 
 export const deleteFilme = async (id) => {

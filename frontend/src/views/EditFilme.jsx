@@ -2,18 +2,30 @@ import {React, useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {getGeneros} from '../services/generoService';
-import { Link, useNavigate } from 'react-router-dom';
-import { addFilme as AddFilmeAPI } from '../services/filmesService';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { updateFilme as updateFilmeAPI } from '../services/filmesService';
 
-const AddFilme = (props) => {
+const EditFilme = (props) => {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loading1, setLoading1] = useState(true);
   const [msgLoad, setMsgLoad] = useState('Carregando dados...');
 
+  useEffect(() => {
+    console.log(location.state.card);
+    if(location.state == null){
+      navigate("/");
+    }
+    formik.setValues(location.state.card);
+    setLoading1(false);
+  }, [location]);
+
+
   const fetchData = async () => {
-      getGeneros().then((data) => {
+    getGeneros().then((data) => {
           setData(data);
           setLoading(false);
       })
@@ -33,7 +45,6 @@ const AddFilme = (props) => {
     foto: Yup.string()
     .required('O link da imagem é obrigatório')
     .url('O link da imagem deve ser um URL válido')
-    .matches(/.(png|jpg|gif)$/, 'O link da imagem deve terminar com .png, .jpg ou .gif')
     .max(250, 'O link deve ter no máximo 250 caracteres'),
     idGenero: Yup.string()
       .required('Selecione o gênero'),
@@ -52,7 +63,7 @@ const AddFilme = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      AddFilmeAPI(values).then((data) => {
+      updateFilmeAPI(values).then((data) => {
         navigate("/");
       })
       .catch((err) => {
@@ -64,7 +75,7 @@ const AddFilme = (props) => {
   return (
     <div className='container'>
       <h1>Adicionar Filme:</h1>
-      {loading ? (
+      {loading && loading1 ? (
         <div className='centered'>
           <div className='d-flex justify-content-center flex-column align-items-center'>
             {msgLoad === 'Carregando dados...' ? <img src="https://i.pinimg.com/originals/f9/41/ae/f941ae9d16fd7d2957eea6e5b1100d1e.gif" style={{maxWidth: "1000px"}} alt="" /> : <img src="https://i.gifer.com/origin/78/787899e9d4e4491f797aba5c61294dfc_w200.gif" style={{maxWidth: "1000px"}} alt="" />}
@@ -117,7 +128,7 @@ const AddFilme = (props) => {
 
           <div className=' d-flex justify-content-end mt-3'>
             <Link to="/" className="btn btn-secondary me-3">Voltar</Link>
-            <button type="submit" className="btn btn-primary">Adicionar</button>
+            <button type="submit" className="btn btn-primary">Editar</button>
           </div>
           
         </form>
@@ -126,4 +137,4 @@ const AddFilme = (props) => {
   );
 }
 
-export default AddFilme;
+export default EditFilme;

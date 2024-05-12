@@ -11,10 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       if(values.id <= 5){
         values.foto="https://source.unsplash.com/random/2000x1000?sig="+values.id;
       }
-      else{
-        values.foto="https://source.unsplash.com/random?sig="+values.id;
-      }
-  
+      
       return values;
     }
   }

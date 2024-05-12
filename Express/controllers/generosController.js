@@ -2,21 +2,48 @@ const res_send = require('../res_send');
 const { Generos } = require('../models/index.js');
 
 exports.filme_list = async (req, res, next) => {
-    res_send.success(res, await Generos.findAll());
+    try{
+        res_send.success(res, await Generos.findAll());
+    }
+    catch(err){
+        res_send.error(res, err);
+    }
 };
 
 exports.filme_detail = async (req, res, next) => {
-    res_send.success(res, await Generos.findByPk(req.params.id));
+    try{
+        res_send.success(res, await Generos.findByPk(req.params.id));
+    }
+    catch(err){
+        res_send.error(res, err);
+    }
 };
 
 exports.filme_create = async (req, res, next) => {
-    res_send.success(res, await Generos.create(req.body));
+    try{
+        req.body.id = undefined;
+        res_send.success(res, await Generos.create(req.body));
+    }
+    catch(err){
+        res_send.error(res, err);
+    }
 };
 
 exports.filme_update = async (req, res, next) => {
-    res_send.success(res, await Generos.update(req.body, {where: {id: req.params.id}}));
+    try{
+        req.body.id = undefined;
+        res_send.success(res, await Generos.update(req.body, {where: {id: req.params.id}}));
+    }
+    catch(err){
+        res_send.error(res, err);
+    }
 };
 
 exports.filme_delete = async (req, res, next) => {
-    res_send.success(res, await Generos.destroy({where: {id: req.params.id}}));
+    try{
+        res_send.success(res, await Generos.destroy({where: {id: req.params.id}}));
+    }
+    catch(err){
+        res_send.error(res, err);
+    }
 };

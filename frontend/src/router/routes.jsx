@@ -6,6 +6,7 @@ import NavbarC from '../components/Navbar';
 import Home from '../views/Home';
 import AddFilme from '../views/AddFilme';
 import PageNotFound from '../views/PageNotFound';
+import EditFilme from '../views/EditFilme';
 
 let router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ let router = createBrowserRouter([
             {
                 path: 'add',
                 Component: AddFilme,
+            },
+            {
+                path: 'edit',
+                Component: EditFilme,
             },
             {
                 path: '*',

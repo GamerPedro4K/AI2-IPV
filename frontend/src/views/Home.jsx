@@ -1,8 +1,8 @@
 import {React, useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Slider from '../components/Slider';
-import { getFilmes } from '../services/filmesService';
-
+import { getFilmes, deleteFilme } from '../services/filmesService';
+import Swal from 'sweetalert2';
 import Container from'react-bootstrap/Container';
 import CardC from '../components/Card';
 import { Link } from 'react-router-dom';
@@ -12,19 +12,39 @@ const Home = (props) => {
     const [loading, setLoading] = useState(true);
     const [msgLoad, setMsgLoad] = useState('Carregando dados...');
 
-    useEffect(() => {
+    const deleteCard = (id) => {
+        deleteFilme(id).then(() => {
+            Swal.fire({
+                title: "Apagado!",
+                text: "Filme foi apagado!",
+                icon: "success"
+            });
+            loadFilmes();
+        }).catch((err) => {
+            Swal.fire({
+                title: "Erro!",
+                text: err.message,
+                icon: "error"
+            });
+        });
+    };
+
+    const loadFilmes = () => {
         getFilmes().then((data) => {
             setData(data);
             setLoading(false);
         }).catch((err) => {
             setMsgLoad(err.message);
         });
+    };
+
+    useEffect(() => {
+        loadFilmes();
     }, []); 
 
 
     return (
         <>
-
         {loading ? (
             <div className='centered'>
                  <div className='d-flex justify-content-center flex-column align-items-center'>
@@ -32,10 +52,9 @@ const Home = (props) => {
                 <h1>{msgLoad}</h1>
             </div>
             </div>
-           
       ) : (
         <div style={{marginTop: '56px'}}>
-            {<Slider items={[data[0] || null, data[1] || null, data[2] || null, data[3] || null, data[4] || null]}/>}
+            {<Slider items={data.slice(0, 5)}/>}
             <div id='filmes'></div>
             <Container className='mt-5'>
                 <div className='row' >
@@ -51,7 +70,7 @@ const Home = (props) => {
                 <div className='row'>
                 {data.map((item) => (
                     <div key={item.id} className='col-12 col-md-6 col-lg-4 col-xl-3 mt-4' style={{ height: '510px' }}>
-                        <CardC data={item} />
+                        <CardC data={item} deleteCard={deleteCard}/>
                     </div>
                 ))}
                 </div>
