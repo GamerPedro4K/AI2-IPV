@@ -21,6 +21,7 @@ const EditFilme = (props) => {
     }
     formik.setValues(location.state.card);
     setLoading1(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
 
