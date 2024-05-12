@@ -7,7 +7,7 @@ import Container from'react-bootstrap/Container';
 import CardC from '../components/Card';
 import { Link } from 'react-router-dom';
 
-const Home = (props) => {
+const Home = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [msgLoad, setMsgLoad] = useState('Carregando dados...');
@@ -53,7 +53,7 @@ const Home = (props) => {
             </div>
             </div>
       ) : (
-        <div style={{marginTop: '56px'}}>
+        <>
             {<Slider items={data.slice(0, 5)}/>}
             <div id='filmes'></div>
             <Container className='mt-5'>
@@ -75,7 +75,7 @@ const Home = (props) => {
                 ))}
                 </div>
             </Container>
-        </div>
+        </>
       )}
     </>
     )

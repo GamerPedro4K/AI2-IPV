@@ -7,10 +7,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+import { PrimeReactProvider } from 'primereact/api';
 library.add(fas, fab, far)
 export { library };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<RoutesPage />);
+root.render(<PrimeReactProvider><RoutesPage /></PrimeReactProvider>);
 

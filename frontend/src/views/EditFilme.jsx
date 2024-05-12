@@ -75,7 +75,7 @@ const EditFilme = (props) => {
 
   return (
     <div className='container'>
-      <h1>Adicionar Filme:</h1>
+      <h1>Editar Filme:</h1>
       {loading && loading1 ? (
         <div className='centered'>
           <div className='d-flex justify-content-center flex-column align-items-center'>

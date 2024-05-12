@@ -2,7 +2,6 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, Outlet } from 'react-router-dom';
 
 const NavbarC = (props) => {
@@ -18,15 +17,12 @@ const NavbarC = (props) => {
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
                 <Nav.Link href="/#filmes">Mais Vistos</Nav.Link>
-                <NavDropdown title="Categorias" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Ação</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Terror</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Comedia</NavDropdown.Item>
-                </NavDropdown>
+                <Nav.Link href="/generos">Generos</Nav.Link>
             </Nav>
             </Navbar.Collapse>
         </Container>
         </Navbar>
+        <div style={{marginTop: '56px'}}></div>
         <Outlet />
         </>
     )

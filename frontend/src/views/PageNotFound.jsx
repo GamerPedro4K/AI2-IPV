@@ -1,11 +1,20 @@
 import React from 'react'
 
-export default function PageNotFound(){
+const PageNotFound = (props) => {
   return (
-	<div className='gamesFlex d-center bgColor flex-column'>
-        <div className='text-404' style={{fontSize: '76px', color:'white'}}>404</div>
-        <div className='text-404'>Page not found</div>
-        <button className='margin-t-50 submitButton active-mathgame' style={{maxWidth: "440px"}} onClick={() => window.location.href = "/"} >Redirect to Homepage!</button>
+    <div className='row text-center' style={{marginTop: '50px'}}>
+      <div className='col-12'>
+        <div style={{fontSize: '76px'}}>404</div>
+      </div>
+      <div className='col-12'>
+      <div>Page not found</div>
+
+      </div>
+      <div className='col-12'>
+        <button className='btn btn-danger margin-t-50 submitButton active-mathgame' style={{maxWidth: "440px"}} onClick={() => window.location.href = "/"} >Redirect to Homepage!</button>
+      </div>
     </div>
   )
 }
+
+export default PageNotFound;

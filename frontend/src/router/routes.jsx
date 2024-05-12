@@ -7,6 +7,7 @@ import Home from '../views/Home';
 import AddFilme from '../views/AddFilme';
 import PageNotFound from '../views/PageNotFound';
 import EditFilme from '../views/EditFilme';
+import Generos from '../views/Generos';
 
 let router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ let router = createBrowserRouter([
             {
                 path: 'edit',
                 Component: EditFilme,
+            },
+            {
+                path: 'Generos',
+                Component: Generos,
             },
             {
                 path: '*',
